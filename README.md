@@ -83,7 +83,7 @@ After the simulation you will get a result such as this. "Mean" is the average w
 
 ```
 
-## For production runs we recommend Azure Batch
+## This example is useful for test and development runs. One solution for operational weather forecasting in AZure is to deploy Azure Batch 
 
 You can visit the this lab https://github.com/schoenemeyer/WRF3.8.1-in-Azure-Batch to learn how to run WRF in Azure Batch
 
