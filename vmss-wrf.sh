@@ -76,16 +76,11 @@ echo "export INTELMPI_ROOT=/opt/intel/impi/5.1.3.223 " >> install-run-wrf.sh
 echo "export I_MPI_FABRICS=shm:dapl " >> install-run-wrf.sh
 echo "export I_MPI_DAPL_PROVIDER=ofa-v2-ib0 " >> install-run-wrf.sh
 echo "source /opt/intel/impi/5.1.3.223/bin64/mpivars.sh " >> install-run-wrf.sh
-echo "scl enable devtoolset-4 " >> install-run-wrf.sh
-echo " wget https://hpccenth2lts.blob.core.windows.net/wrf/wrf.zip"  >> install-run-wrf.sh 
-echo " unzip wrf"  >> install-run-wrf.sh 
-echo " rm wrf.zip"  >> install-run-wrf.sh 
+ 
 for (( i=1; i<$1; i++))
    do
    echo "scp -r * $user@$nah$i:~" >> install-run-wrf.sh
    done
-echo " wget https://hpccenth2lts.blob.core.windows.net/wrf/wrfrst_d01_2001-10-25_00_00_00" >> install-run-wrf.sh
-echo " wget https://hpccenth2lts.blob.core.windows.net/wrf/wrfbdy_d01" >> install-run-wrf.sh
 echo " mpirun -np " $((16*$1)) " -perhost 16 -hostfile ./hostfile ./wrf.exe" >> install-run-wrf.sh
 echo " grep 'Timing for main' rsl.error.0000 | tail -149 | awk '{print"' $9'"}' | awk -f stats.awk" >> install-run-wrf.sh
 scp -P 50000 ./install-run-wrf.sh $user@$ipm:~
@@ -98,16 +93,13 @@ echo "source /opt/intel/impi/5.1.3.223/bin64/mpivars.sh "
 echo " ####################################### "
 echo " WRF "
 echo " ####################################### "
-echo " wget https://hpccenth2lts.blob.core.windows.net/wrf/wrf.zip"
-echo " unzip wrf"
-echo " rm wrf.zip"
+
 echo " run ./install-run-wrf.sh"
 echo " scp -r * $user@wrfvma244000001:~ "
 echo " export LD_LIBRARY_PATH=./:"'$'"LD_LIBRARY_PATH"
 echo " no shared FS needed"
 echo " ulimit -s unlimited"
-echo " wget https://hpccenth2lts.blob.core.windows.net/wrf/wrfrst_d01_2001-10-25_00_00_00"
-echo " wget https://hpccenth2lts.blob.core.windows.net/wrf/wrfbdy_d01"
+
 echo " mpirun -np $((16*$1)) -perhost 16 -hostfile ./hostfile ./wrf.exe "
 echo " grep 'Timing for main' rsl.error.0000 | tail -149 | awk '{print"' $9'"}' | awk -f stats.awk"
 
